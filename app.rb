@@ -26,7 +26,7 @@ App = lambda do |env|
         then races[race_id] = [ws]
         else races[race_id] << ws unless races[race_id].index(ws)
         end
-      elsif type == 'comment'
+      elsif type == 'post'
         races[race_id].each do |sock|
           sock.send(message['comment'])
         end
