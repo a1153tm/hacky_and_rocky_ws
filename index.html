@@ -32,6 +32,7 @@
 </html>
 
 <script>
+$(function() {
   var host = location.origin.replace(/^http/, 'ws')
   var ws = new WebSocket(host);
 
@@ -52,8 +53,10 @@
   // receive
   ws.onmessage = function (event) {
     var li = $('<li>');
-    //onsole.log(event.data);
-    li.html(event.data);
+    var comment = JSON.parse(event.data);
+    console.log(comment);
+    //li.html(event.data);
+    li.html(comment.comment);
     $('#comments').append(li);
   };
 
@@ -61,5 +64,6 @@
   ws.onclose = function(event) {
     console.log(ws.readyState);
   };
+});
 </script>
 

@@ -27,9 +27,10 @@ App = lambda do |env|
         else races[race_id] << ws unless races[race_id].index(ws)
         end
       elsif type == 'post'
-        races[race_id].each do |sock|
-          sock.send(message['comment'])
-        end
+        user_name = message['user_name']
+        comment = message['comment']
+        json = JSON.generate({"user_name" => user_name, "comment" => comment})
+        races[race_id].each { |sock| sock.send(json) }
       end
     end
 
