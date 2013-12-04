@@ -45,7 +45,7 @@ $(function() {
   // send
   $('#post-comment').click(function() {
     var _comment = $('#new-comment');
-    message = {race_id: 1, type: 'post', comment: _comment.val()};
+    message = {race_id: 1, type: 'post', comment: _comment.val(), user_name: 'test_user'};
     ws.send(JSON.stringify(message));
     _comment.val('');
   });
