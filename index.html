@@ -38,7 +38,7 @@ $(function() {
 
   // open
   ws.onopen = function () {
-    message = {race_id: 1, type: 'join'};
+    message = {race_id: 1, type: 'join', user_name: 'test_user'};
     ws.send(JSON.stringify(message));
   };
 
