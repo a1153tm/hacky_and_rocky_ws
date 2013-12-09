@@ -9,11 +9,17 @@ races = {}
 
 App = lambda do |env|
   if Faye::WebSocket.websocket?(env)
-    ws = Faye::WebSocket.new(env)
-    #ws = Faye::WebSocket.new(env, :ping => 5, :retry => 100)
+    ws = Faye::WebSocket.new(env, {:ping => 10, :retry => 100})
+    ping = nil
 
     ws.on :open do |event|
       puts "websocket connection open"
+      ping = Thread.new do
+        loop do
+          sleep 20
+          ws.ping
+        end
+      end
     end
 
     ws.on :message do |event|
@@ -40,6 +46,7 @@ App = lambda do |env|
         space.delete(ws) if space.index(ws)
       end
       ws = nil
+      Thread::kill(ping)
     end
 
     ws.rack_response
